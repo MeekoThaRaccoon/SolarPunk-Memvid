@@ -1,0 +1,11 @@
+cat > requirements.txt << 'EOF'
+opencv-python==4.8.1.78
+qrcode==7.4.2
+numpy==1.24.3
+EOF
+
+# Install
+pip install -r requirements.txt
+
+# Run test
+python solarpunk_memvid.py
