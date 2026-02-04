@@ -1,0 +1,33 @@
+name: AI Auto-Fix
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: AI Code Fix
+        uses: 1set/gpt-pull-request-review@v2.0.4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          mode: "fix"
+          
+      - name: Create Fix PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "🤖 AI Auto-Fix"
+          body: "AI auto-fixed code and dependencies"
+          branch: "ai-auto-fix"
